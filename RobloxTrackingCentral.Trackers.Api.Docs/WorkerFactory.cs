@@ -30,7 +30,7 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
 
         private async Task<List<VersionInformation>> GetAllApiVersions(string api)
         {
-            string url = "https://" + api + BaseUrl + "/docs/index.html";
+            string url = "https://" + api + "." + BaseUrl + "/docs/index.html";
             string docsPage = await Http.Client.GetStringRetry(url);
 
             foreach (string line in docsPage.Split(new char[] { '\r', '\n' }))
@@ -49,7 +49,7 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
 
         private async Task<string> GetDocs(string api, VersionInformation version)
         {
-            string url = "https://" + api + BaseUrl + "/docs/" + version.Url;
+            string url = "https://" + api + "." + BaseUrl + "/docs/" + version.Url;
             string docs = await Http.Client.GetStringRetry(url);
             return docs;
         }
