@@ -37,7 +37,7 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
             {
                 if (!line.StartsWith(SwaggerConfigurationPrefix)) continue;
 
-                string configJson = line[SwaggerConfigurationPrefix.Length..^2];
+                string configJson = line[SwaggerConfigurationPrefix.Length..^3];
 
                 var config = JsonSerializer.Deserialize<SwaggerConfiguration>(configJson)!;
 
