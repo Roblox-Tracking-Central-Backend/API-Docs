@@ -7,9 +7,6 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
 {
     internal class Program
     {
-        static readonly string? PersonalToken = Environment.GetEnvironmentVariable("RTC_APIDOCS_TOKEN");
-        static readonly string? AuthUsername = Environment.GetEnvironmentVariable("RTC_APIDOCS_USER");
-
         static async Task Main(string[] args)
         {
             Console.WriteLine("Roblox Tracking Central");
@@ -19,9 +16,15 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
             string? personalToken = Environment.GetEnvironmentVariable("RTC_APIDOCS_TOKEN");
             string? authUsername = Environment.GetEnvironmentVariable("RTC_APIDOCS_USER");
 
-            if (string.IsNullOrEmpty(personalToken) || string.IsNullOrEmpty(authUsername))
+            if (string.IsNullOrEmpty(personalToken))
             {
-                Console.WriteLine("Environment variables are missing or empty");
+                Console.WriteLine("Environment variable RTC_APIDOCS_TOKEN are missing or empty");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(authUsername))
+            {
+                Console.WriteLine("Environment variable RTC_APIDOCS_USER are missing or empty");
                 return;
             }
 
@@ -74,7 +77,7 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
                 var remote = repository.Network.Remotes["origin"];
                 var options = new PushOptions
                 {
-                    CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials { Username = AuthUsername, Password = PersonalToken }
+                    CredentialsProvider = (_url, _user, _cred) => new UsernamePasswordCredentials { Username = authUsername, Password = personalToken }
                 };
                 var pushRefSpec = "refs/heads/main";
                 repository.Network.Push(remote, pushRefSpec, options);
