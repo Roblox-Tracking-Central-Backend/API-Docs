@@ -26,10 +26,10 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Publish
-      run: dotnet publish -p:PublishSingleFile=true -r ${{ matrix.platform }} -c ${{ matrix.configuration }} --self-contained false ./RobloxTrackingCentral.Trackers.Api.Docs.csproj
+      run: dotnet publish -p:PublishSingleFile=true -r ${{ matrix.platform }} -c ${{ matrix.configuration }} --self-contained false ./RobloxTrackingCentral.Trackers.Api.Docs/RobloxTrackingCentral.Trackers.Api.Docs.csproj
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: RDHT-Backend (${{ matrix.configuration }}, ${{ matrix.platform }})
+        name: RobloxTrackingCentral.Trackers.Api.Docs (${{ matrix.configuration }}, ${{ matrix.platform }})
         path: |
-          ./bin/${{ matrix.configuration }}/net6.0/${{ matrix.platform }}/publish/*
+          ./bin/RobloxTrackingCentral.Trackers.Api.Docs/${{ matrix.configuration }}/net6.0/${{ matrix.platform }}/publish/*
