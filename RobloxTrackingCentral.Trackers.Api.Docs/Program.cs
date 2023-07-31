@@ -59,13 +59,16 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
 
             Console.WriteLine("Workers have finished");
 
+            List<string> changes = factory.Changes;
+            changes.Sort();
+
             Console.WriteLine("Committing changes");
 
             try
             {
                 var time = DateTimeOffset.Now;
                 var signature = new Signature("Roblox Tracking Central", "rtc@rtc.local", time);
-                var commit = repository.Commit($"{time.ToString("dd/MM/yyyy HH:mm:ss")} [{string.Join(", ", factory.Changes)}]", signature, signature);
+                var commit = repository.Commit($"{time.ToString("dd/MM/yyyy HH:mm:ss")} [{string.Join(", ", changes)}]", signature, signature);
                 Console.WriteLine("Committing!");
 
                 var remote = repository.Network.Remotes["origin"];
