@@ -33,5 +33,8 @@ jobs:
         shell: bash
         
       - name:  Run RobloxTrackingCentral.Trackers.Api.Docs
+        env:
+          RCT_APIDOCS_TOKEN:  ${{ secrets.RCT_APIDOCS_TOKEN }}
+          RCT_APIDOCS_USER:  ${{ secrets.RCT_APIDOCS_USER }}
         run:   ./RobloxTrackingCentral.Trackers.Api.Docs
         shell: bash
