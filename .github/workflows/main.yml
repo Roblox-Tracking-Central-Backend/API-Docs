@@ -1,0 +1,29 @@
+name: RCT Tracker ApiDocs Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      RCT_APIDOCS_TOKEN:  ${{ secrets.RCT_APIDOCS_TOKEN }}
+      RCT_APIDOCS_USER:  ${{ secrets.RCT_APIDOCS_USER }}
+    steps:
+      - name:  Fetch RCT-Tracker-ApiDocs-Linux.zip
+        run:   curl -L -s -o "#1" https://github.com/Roblox-Tracking-Central-Backend/API-Docs/releases/latest/download/{RCT-Tracker-ApiDocs-Linux.zip}
+        shell: bash
+
+      - name:  Extract RCT-Tracker-ApiDocs-Linux.zip
+        run:   7z x RCT-Tracker-ApiDocs-Linux.zip
+        shell: bash
+        
+      - name:  Modify RobloxTrackingCentral.Trackers.Api.Docs Permissions
+        run:   chmod +x ./RobloxTrackingCentral.Trackers.Api.Docs
+        shell: bash
+        
+      - name:  Run RobloxTrackingCentral.Trackers.Api.Docs
+        run:   ./RobloxTrackingCentral.Trackers.Api.Docs
+        shell: bash
