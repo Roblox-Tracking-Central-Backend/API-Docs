@@ -32,4 +32,4 @@ jobs:
       with:
         name: RobloxTrackingCentral.Trackers.Api.Docs (${{ matrix.configuration }}, ${{ matrix.platform }})
         path: |
-          ./bin/RobloxTrackingCentral.Trackers.Api.Docs/${{ matrix.configuration }}/net6.0/${{ matrix.platform }}/publish/*
+          ./RobloxTrackingCentral.Trackers.Api.Docs/bin/${{ matrix.configuration }}/net6.0/${{ matrix.platform }}/publish/*
