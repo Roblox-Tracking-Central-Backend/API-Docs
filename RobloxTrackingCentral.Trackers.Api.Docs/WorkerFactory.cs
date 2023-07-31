@@ -61,12 +61,20 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
             return Path.Combine(api, version.Version + ".json");
         }
 
+        private string ConstructGitPath(string path)
+        {
+            string dir = Path.Combine(Constants.ClonePath, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(dir)!);
+            return dir;
+        }
+
         private bool AnyChanges(string file, string newContents)
         {
-            if (!File.Exists(file))
-                return false;
+            string clonePath = ConstructGitPath(file);
+            if (!File.Exists(clonePath))
+                return true;
 
-            string contents = File.ReadAllText(file);
+            string contents = File.ReadAllText(clonePath);
 
             return contents != newContents;
         }
@@ -75,7 +83,8 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
         {
             Changes.Add(version.Name);
 
-            File.WriteAllText(file, newContents);
+            string clonePath = ConstructGitPath(file);
+            File.WriteAllText(clonePath, newContents);
 
             _Repository.Index.Add(file);
         }
@@ -103,7 +112,7 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
 
                 foreach (var version in versions)
                 {
-                    Console.WriteLine($"[{api}] {version.Version}");
+                    Console.WriteLine($"[{api}] {version.Name}");
 
                     string path = ConstructPath(api, version);
 

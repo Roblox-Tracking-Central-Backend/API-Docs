@@ -10,8 +10,6 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
         static readonly string? PersonalToken = Environment.GetEnvironmentVariable("RTC_APIDOCS_TOKEN");
         static readonly string? AuthUsername = Environment.GetEnvironmentVariable("RTC_APIDOCS_USER");
 
-        private const string ClonePath = "clone";
-
         static async Task Main(string[] args)
         {
             Console.WriteLine("Roblox Tracking Central");
@@ -28,18 +26,18 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
             }
 
             // TODO: sync w/ latest instead of deleting
-            if (Directory.Exists(ClonePath))
+            if (Directory.Exists(Constants.ClonePath))
             {
                 Console.WriteLine("Deleting current clone directory");
-                DirectoryHelper.ForceDelete(ClonePath);
+                DirectoryHelper.ForceDelete(Constants.ClonePath);
             }
 
-            Console.WriteLine("Cloning " + Repositories.Tracker);
-            string gitPath = Repository.Clone("https://github.com/" + Repositories.Tracker + ".git", ClonePath);
+            Console.WriteLine("Cloning " + Constants.Tracker);
+            string gitPath = Repository.Clone("https://github.com/" + Constants.Tracker + ".git", Constants.ClonePath);
             Repository repository = new Repository(gitPath);
 
-            Console.WriteLine("Fetching APIs list from " + Repositories.Backend);
-            string apisJsonStr = await Http.Client.GetStringRetry("https://raw.githubusercontent.com/" + Repositories.Backend + "/main/APIs.json");
+            Console.WriteLine("Fetching APIs list from " + Constants.Backend);
+            string apisJsonStr = await Http.Client.GetStringRetry("https://raw.githubusercontent.com/" + Constants.Backend + "/main/APIs.json");
             List<string> apis = JsonSerializer.Deserialize<List<string>>(apisJsonStr)!;
 
             Queue<string> apisQueue = new Queue<string>();

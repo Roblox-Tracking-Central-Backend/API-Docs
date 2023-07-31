@@ -18,8 +18,8 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
         {
             try
             {
-                Console.WriteLine("Fetching config from " + Repositories.Backend);
-                string configJsonStr = Http.Client.GetStringRetry("https://raw.githubusercontent.com/" + Repositories.Backend + "/main/Config.json").Result;
+                Console.WriteLine("Fetching config from " + Constants.Backend);
+                string configJsonStr = Http.Client.GetStringRetry("https://raw.githubusercontent.com/" + Constants.Backend + "/main/Config.json").Result;
                 Default = JsonSerializer.Deserialize<Config>(configJsonStr)!;
             }
             catch (Exception ex)
