@@ -112,13 +112,20 @@ namespace RobloxTrackingCentral.Trackers.Api.Docs
 
                 foreach (var version in versions)
                 {
-                    Console.WriteLine($"[{api}] {version.Name}");
+                    try
+                    {
+                        Console.WriteLine($"[{api}] {version.Name}");
 
-                    string path = ConstructPath(api, version);
+                        string path = ConstructPath(api, version);
 
-                    string docs = await GetDocs(api, version);
+                        string docs = await GetDocs(api, version);
 
-                    CheckForChanges(api, version, path, docs);
+                        CheckForChanges(api, version, path, docs);
+                    }
+                    catch (HttpRequestException ex)
+                    {
+                        Console.WriteLine($"Failed to fetch docs: {ex}");
+                    }
                 }
             }
         }
